@@ -11,7 +11,9 @@ class TestMoney < Test::Unit::TestCase
   def test_equality
     assert_equal(3.usd, 3.usd)
     assert_equal(3.00.usd, 3.usd)
-    assert_equal(3.00.usd, 3.001.usd)
+    assert_equal(3.00.usd, 3.001.usd)   # Track to nearest penny for USD
+    assert_equal(3.1.jpy, 3.2.jpy)      # Track whole Japanese Yen only
+    assert_not_equal(3.10.usd, 3.20.usd)
   end
-  
+
 end

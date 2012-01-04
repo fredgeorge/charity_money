@@ -26,5 +26,6 @@ class Unit
   
   Unit.new 'USD', 100
   Unit.new 'GBP', 100
+  Unit.new 'JPY'
   
 end
