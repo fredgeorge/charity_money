@@ -1,6 +1,8 @@
 # Copyright 2012 Fred George
 # Distributed under the terms of the GNU Lesser General Public License v3
 
+require File.expand_path(File.join(File.dirname(__FILE__), 'base', 'numeric'))
+
 # Understands a particular measurement
 class Quantity
   include Comparable
@@ -21,6 +23,23 @@ class Quantity
   def <=>(other)
     raise ArgumentError.new('Units cannot be compared') unless self.unit == other.unit
     self.amount <=> other.amount
+  end
+  
+  def +(other)
+    raise ArgumentError.new('Different units cannot be added or subtracted') unless self.unit == other.unit
+    self.class.new(self.amount + other.amount, self.unit)
+  end
+  
+  def -@
+    self.class.new(-@amount, @unit)
+  end
+  
+  def -(other)
+    self + (-other)
+  end
+  
+  def *(other)
+    self.class.new(self.amount * other.amount, self.unit)
   end
   
 end

@@ -1,9 +1,10 @@
 # Copyright 2012 Fred George
 # Distributed under the terms of the GNU Lesser General Public License v3
 
-# Understands a metric
+require File.expand_path(File.join(File.dirname(__FILE__), 'unit'))
 require File.expand_path(File.join(File.dirname(__FILE__), 'quantity'))
 
+# Understands a currency metric
 class MoneyUnit
   attr_reader :label, :subunits
   private :label, :subunits

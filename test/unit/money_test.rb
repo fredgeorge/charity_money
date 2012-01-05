@@ -1,11 +1,10 @@
 # Copyright 2012 Fred George
 # Distributed under the terms of the GNU Lesser General Public License v3
 
-# Confirms the operations for Money as a type of Quantity
 require "test/unit"
-
 require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'lib', 'money_unit'))
 
+# Confirms the operations for Money as a type of Quantity
 class TestMoney < Test::Unit::TestCase
 
   def test_equality
@@ -31,6 +30,24 @@ class TestMoney < Test::Unit::TestCase
   
   def test_sorting_fails_with_mixed_units
     assert_raise(ArgumentError) { [1.usd, 3.usd, 2.jpy].sort }
+  end
+  
+  def test_addition
+    assert_equal(7.usd, 3.usd + 4.usd)
+    assert_equal(7.usd, -4.usd + 11.usd)
+  end
+  
+  def test_subtraction
+    assert_equal(7.usd, 11.usd - 4.usd)
+  end
+  
+  def test_arithmetic_fails_with_mixed_units
+    assert_raise(ArgumentError) { 1.usd + 2.jpy }
+    assert_raise(ArgumentError) { 1.usd - 2.jpy }
+  end
+  
+  def test_scaling
+    assert_equal(6.usd, 8.usd * 75.percent)
   end
 
 end
