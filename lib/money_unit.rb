@@ -4,7 +4,7 @@
 # Understands a metric
 require File.expand_path(File.join(File.dirname(__FILE__), 'quantity'))
 
-class Unit
+class MoneyUnit
   attr_reader :label, :subunits
   private :label, :subunits
   
@@ -40,8 +40,8 @@ class Unit
       end
     end
   
-  Unit.new 'USD', 100
-  Unit.new 'GBP', 100
-  Unit.new 'JPY'
+  MoneyUnit.new 'USD', 100
+  MoneyUnit.new 'GBP', 100
+  MoneyUnit.new 'JPY'
   
 end

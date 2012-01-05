@@ -4,7 +4,7 @@
 # Confirms the operations for Money as a type of Quantity
 require "test/unit"
 
-require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'lib', 'unit'))
+require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'lib', 'money_unit'))
 
 class TestMoney < Test::Unit::TestCase
 
@@ -17,12 +17,12 @@ class TestMoney < Test::Unit::TestCase
   end
   
   def test_quantity_creation_from_unit
-    assert_equal(3.15.usd, Unit::USD.amount(3.15))
-    assert_equal(3.15.usd, Unit.for('USD').amount(3.15))
+    assert_equal(3.15.usd, MoneyUnit::USD.amount(3.15))
+    assert_equal(3.15.usd, MoneyUnit.for('USD').amount(3.15))
   end
   
   def test_incorrect_unit_caught
-    assert_raise(RuntimeError) { Unit.for('MISSING') }
+    assert_raise(RuntimeError) { MoneyUnit.for('MISSING') }
   end
   
   def test_sorting
