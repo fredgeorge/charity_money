@@ -6,6 +6,11 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'lib', 'm
 
 # Confirms the operations for Money as a type of Quantity
 class TestMoney < Test::Unit::TestCase
+  
+  def setup
+    Valuation.reset
+    Valuation.new(MoneyUnit::USD, MoneyUnit::GBP, 1.55)
+  end
 
   def test_equality
     assert_equal(3.usd, 3.usd)
@@ -56,6 +61,10 @@ class TestMoney < Test::Unit::TestCase
     assert_equal(6.usd, 8.usd * 0.75)
     assert_equal(10.usd, 8.usd + 0.25)
     assert_equal(6.usd, 8.usd - 0.25)
+  end
+  
+  def test_mixed_currency_equality
+    assert_equal(3.10.usd, 2.gbp)
   end
 
 end

@@ -15,9 +15,9 @@ class Quantity
   end
   
   def ==(other)
-    raise "Trying to compare a Quantity to a #{other.class}" unless other.kind_of?(Quantity)
+    return false unless other.kind_of?(Quantity)
     return true if self.object_id == other.object_id
-    self.unit == other.unit && self.amount == other.amount
+    self.amount == converted_amount(other)
   end
   
   def <=>(other)
@@ -29,7 +29,7 @@ class Quantity
     return self + Unit::SCALE.amount(other) if other.is_a?(Numeric)
     return self * Unit::SCALE.amount(1 + other.amount) if other.unit == Unit::SCALE
     raise ArgumentError.new('Different units cannot be added or subtracted') unless self.unit == other.unit
-    self.class.new(self.amount + other.amount, self.unit)
+    self.class.new(self.amount + converted_amount(other), self.unit)
   end
   
   def -@
@@ -44,5 +44,11 @@ class Quantity
     return self * Unit::SCALE.amount(other) if other.is_a?(Numeric)
     self.class.new(self.amount * other.amount, self.unit)
   end
+  
+  private
+  
+    def converted_amount(other)
+      other.unit.convert_to(self.unit, other.amount)
+    end
   
 end

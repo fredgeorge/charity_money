@@ -3,6 +3,7 @@
 
 require File.expand_path(File.join(File.dirname(__FILE__), 'unit'))
 require File.expand_path(File.join(File.dirname(__FILE__), 'quantity'))
+require File.expand_path(File.join(File.dirname(__FILE__), 'valuation'))
 
 # Understands a currency metric
 class MoneyUnit
@@ -23,6 +24,10 @@ class MoneyUnit
   
   def self.for(label)
     @@all.fetch(label.upcase) { raise "No unit found for '#{label}'" }
+  end
+  
+  def convert_to(other, amount)
+    amount / Valuation.ratio(self, other)
   end
   
   private
