@@ -28,7 +28,6 @@ class Quantity
   def +(other)
     return self + Unit::SCALE.amount(other) if other.is_a?(Numeric)
     return self * Unit::SCALE.amount(1 + other.amount) if other.unit == Unit::SCALE
-    raise ArgumentError.new('Different units cannot be added or subtracted') unless self.unit == other.unit
     self.class.new(self.amount + converted_amount(other), self.unit)
   end
   
@@ -42,6 +41,7 @@ class Quantity
   
   def *(other)
     return self * Unit::SCALE.amount(other) if other.is_a?(Numeric)
+    raise ArgumentError.new("Attempting to multiply two units; only scaling supported") unless other.unit == Unit::SCALE
     self.class.new(self.amount * other.amount, self.unit)
   end
   

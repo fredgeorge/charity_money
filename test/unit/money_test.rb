@@ -46,11 +46,6 @@ class TestMoney < Test::Unit::TestCase
     assert_equal(7.usd, 11.usd - 4.usd)
   end
   
-  def test_arithmetic_fails_with_mixed_units
-    assert_raise(ArgumentError) { 1.usd + 2.jpy }
-    assert_raise(ArgumentError) { 1.usd - 2.jpy }
-  end
-  
   def test_scaling
     assert_equal(6.usd, 8.usd * 75.percent)
     assert_equal(10.usd, 8.usd + 25.percent)
@@ -65,6 +60,18 @@ class TestMoney < Test::Unit::TestCase
   
   def test_mixed_currency_equality
     assert_equal(3.10.usd, 2.gbp)
+    assert_equal(2.gbp, 3.10.usd)
+  end
+  
+  def test_mixed_currency_arithmetic
+    assert_equal(6.10.usd, 3.usd + 2.gbp)
+    assert_equal(6.10.usd, 2.gbp + 3.usd)
+    assert_equal(-0.9.usd, 2.gbp - 4.usd)
+  end
+  
+  def test_unit_multiplication_rejected
+    assert_raise(ArgumentError) { 2.gbp * 4.gbp }
+    assert_raise(ArgumentError) { 2.gbp * 4.usd }
   end
 
 end
