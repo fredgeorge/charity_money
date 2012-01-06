@@ -48,6 +48,14 @@ class TestMoney < Test::Unit::TestCase
   
   def test_scaling
     assert_equal(6.usd, 8.usd * 75.percent)
+    assert_equal(10.usd, 8.usd + 25.percent)
+    assert_equal(6.usd, 8.usd - 25.percent)
+  end
+  
+  def test_autoboxing_numerics
+    assert_equal(6.usd, 8.usd * 0.75)
+    assert_equal(10.usd, 8.usd + 0.25)
+    assert_equal(6.usd, 8.usd - 0.25)
   end
 
 end
